@@ -1,13 +1,16 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from inference import predict_sarcasm
+import sys
+sys.path.append('..')
+from inference import predict_all
 
-app = FastAPI()
+app = FastAPI(title="Sarcasm-Sentiment Analyzer API")
 
 class InputText(BaseModel):
     text: str
 
 @app.post("/predict")
 def predict(input: InputText):
-    return predict_sarcasm(input.text)
+    """Predict sarcasm and sentiment for given text"""
+    return predict_all(input.text)
 
